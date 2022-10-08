@@ -13,9 +13,10 @@ public abstract class Bag {
      *       - an int named capacity
      *       - an array of Strings named contents
      */
-
-
-
+    private String color;
+    private int numberOfContents;
+    private int capacity;
+    private String[] contents;
 
     /*
      * TODO: Create a constructor that takes two arguments:
@@ -26,9 +27,25 @@ public abstract class Bag {
      * be empty (e.g. numberOfContents is 0 and an empty String array for
      * its contents.)
      */
+    public Bag(String colour, int cap) {
+        color = colour;
+        capacity = cap;
+        contents = new String[capacity];
+        numberOfContents = 0;
+    }
 
 
+    public String getColor() {
+        return color;
+    }
 
+    public int getNumberOfContents() {
+        return numberOfContents;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
 
     /*
      * TODO: Create a variety of 'getter' functions.
@@ -47,6 +64,9 @@ public abstract class Bag {
      */
 
 
+    public void setColor(String colour) {
+        color = colour;
+    }
 
 
 
@@ -62,6 +82,14 @@ public abstract class Bag {
      */
 
 
+    public boolean addItem(String item) {
+        if (numberOfContents < capacity) {
+            contents[numberOfContents] = item;
+            numberOfContents += 1;
+            return true;
+        }
+        return false;
+    }
 
 
 
@@ -76,6 +104,16 @@ public abstract class Bag {
      * @return
      */
 
+    public String popItem() {
+        if (numberOfContents == 0) {
+            return null;
+        } else {
+            numberOfContents -= 1;
+            String popped = contents[numberOfContents];
+            contents[numberOfContents] = null;
+            return popped;
+        }
+    }
 
 
 
@@ -86,9 +124,16 @@ public abstract class Bag {
      * @param n the amount to increase this Bag's capacity by
      */
     public void increaseCapacity(int n) {
-        // TODO: Implement this method.
+        this.capacity += n;
 
+        String[] copied = new String[contents.length + n];
+        for (String item: contents) {
+            copied[copied.length - 1] = item;
+        }
+
+        this.contents = copied;
     }
+
 
     /**
      * Return the details of this Bag.
